@@ -1,0 +1,21 @@
+### My template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
+# Jupyter notebook
+.ipynb_checkpoints
+
+# data
+raw_data
+data
+model
+
+# three js
+three.js
+
+# test
+test
