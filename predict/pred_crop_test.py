@@ -20,13 +20,13 @@ def mk_predict_dir(dir):
     os.makedirs(os.path.join(dir, 'comparison_results'), exist_ok=True)
 
 
-def predict(model_name, target_id):
+def predict(model_name, model_pth, target_id):
     # root output dir
-    root_pred_dir = rf'D:\home\school\ntut\lab\dataset\chest-ct-segmentation\pred_crop_data\{model_name}'
+    root_pred_dir = rf'D:\home\school\ntut\dataset\chest-ct-segmentation\pred_crop_data\{model_name}'
 
     # root src dir
-    root_img_dir = r'D:\home\school\ntut\lab\dataset\chest-ct-segmentation\crop_data\images'
-    root_lab_dir = r'D:\home\school\ntut\lab\dataset\chest-ct-segmentation\crop_data\masks'
+    root_img_dir = r'D:\home\school\ntut\dataset\chest-ct-segmentation\crop2_data\images'
+    root_lab_dir = r'D:\home\school\ntut\dataset\chest-ct-segmentation\crop2_data\masks'
 
     # image and label dir
     img_fd = target_id
@@ -89,10 +89,25 @@ def predict(model_name, target_id):
         write_pred_label_mask(inp_img, mask_img, lab_img, os.path.join(comparison_result_dir, f'{i}.bmp'))
 
 
+def predict_all(model_name, model_pth, img_dir):
+    target_ids = os.listdir(img_dir)
+    for i, target_id in enumerate(target_ids):
+        print(f'[{i}]: {target_id}')
+        print(target_id)
+        predict(model_name, model_pth, target_id)
+
+
 if __name__ == '__main__':
-    # ID00423637202312137826377, ID00367637202296290303449
+    # ID00423637202312137826377, ID00367637202296290303449, ID00426637202313170790466, ID00007637202177411956430
+    # ID00032637202181710233084
     target_id = 'ID00423637202312137826377'
-    model_pth = '../model/crop_model_6.pth'
-    model_name = 'crop_model_6'
-    print(target_id)
-    predict(model_name, target_id)
+    model_pth = '../model/crop2/model_99.pth'
+    model_name = 'crop2_model_99'
+    # model_pth = '../model/crop_model_9.pth'
+    # model_name = 'crop_model_9'
+    # print(target_id)
+    # predict(model_name, model_pth, target_id)
+
+    # predict all
+    target_img_dir = r'D:\home\school\ntut\dataset\chest-ct-segmentation\crop2_data\images'
+    predict_all(model_name, model_pth, target_img_dir)
