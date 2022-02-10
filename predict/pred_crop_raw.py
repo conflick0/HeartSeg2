@@ -18,10 +18,10 @@ def mk_predict_dir(dir):
 
 def predict(target_id, model_name):
     # root output dir
-    root_pred_dir = fr'D:\home\school\ntut\lab\dataset\chest-ct-segmentation\pred_crop_data\{model_name}'
+    root_pred_dir = fr'D:\home\school\ntut\dataset\chest-ct-segmentation\pred_crop_data\{model_name}'
 
     # root src dir
-    img_dir = r'D:\home\school\ntut\lab\dataset\corcta_dcm'
+    img_dir = r'D:\home\school\ntut\dataset\corcta\corcta_dcm'
 
     # image and label dir
     img_fd = target_id
@@ -71,8 +71,8 @@ def predict(target_id, model_name):
 
 
 if __name__ == '__main__':
-    model_pth = '../model/crop_model_6.pth'
-    model_name = 'crop_model_6'
+    model_pth = '../model/crop2/model_99.pth'
+    model_name = 'crop2_model_99'
     target_id = 'raw_dcm'
     print(target_id)
     predict(target_id, model_name)
