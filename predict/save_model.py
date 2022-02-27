@@ -7,8 +7,8 @@ import os
 ROOT_DIR = r'D:\home\school\ntut\project\HeartSeg2'
 
 model_pth = os.path.join(ROOT_DIR, 'model/vit_checkpoint/imagenet21k/R50+ViT-B_16.npz')
-model_weight_pth = os.path.join(ROOT_DIR, 'model/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/epoch_99.pth')
-out_model_pth = '../model/crop2/model_99.pth'
+model_weight_pth = os.path.join(ROOT_DIR, 'model/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/bst_ep100.pth')
+out_model_pth = '../model/crop2/model_bst_ep100.pth'
 vit_name = 'R50-ViT-B_16'
 num_classes = 2
 n_skip = 3

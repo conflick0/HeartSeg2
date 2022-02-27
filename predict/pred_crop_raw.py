@@ -71,8 +71,8 @@ def predict(target_id, model_name):
 
 
 if __name__ == '__main__':
-    model_pth = '../model/crop2/model_99.pth'
-    model_name = 'crop2_model_99'
+    model_pth = '../model/crop2/model_bst_ep100.pth'
+    model_name = 'crop2_model_bst_ep100'
     target_id = 'raw_dcm'
     print(target_id)
     predict(target_id, model_name)

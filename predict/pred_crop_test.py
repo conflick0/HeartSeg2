@@ -101,8 +101,8 @@ if __name__ == '__main__':
     # ID00423637202312137826377, ID00367637202296290303449, ID00426637202313170790466, ID00007637202177411956430
     # ID00032637202181710233084
     target_id = 'ID00423637202312137826377'
-    model_pth = '../model/crop2/model_99.pth'
-    model_name = 'crop2_model_99'
+    model_pth = '../model/crop2/model_bst_ep100.pth'
+    model_name = 'crop2_model_bst_ep100'
     # model_pth = '../model/crop_model_9.pth'
     # model_name = 'crop_model_9'
     # print(target_id)
