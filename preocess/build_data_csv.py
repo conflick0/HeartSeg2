@@ -33,11 +33,12 @@ def get_df(root_img_dir, root_lab_dir, pids):
 
 
 if __name__ == '__main__':
-    root_dir = r'D:\home\school\ntut\dataset\chest-ct-segmentation\crop2_data'
+    data_name = 'adj_contract'
+    root_dir = fr'D:\home\school\ntut\dataset\chest-ct-segmentation\{data_name}_data'
     root_img_dir = path.join(root_dir, 'images')
     root_lab_dir = path.join(root_dir, 'masks')
 
-    csv_dir = '../data_csv/crop2'
+    csv_dir = f'../data_csv/{data_name}'
     tr_csv_pth = path.join(csv_dir, 'tr.csv')
     tt_csv_pth = path.join(csv_dir, 'tt.csv')
 

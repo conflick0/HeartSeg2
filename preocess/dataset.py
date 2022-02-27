@@ -2,9 +2,10 @@ import numpy as np
 from PIL import Image
 
 class Dataset:
-    def __init__(self, x_pths, y_pths):
+    def __init__(self, x_pths, y_pths, is_rm_artifacts=True):
         self.x_pths = x_pths
         self.y_pths = y_pths
+        self.is_rm_artifacts = is_rm_artifacts
 
     def __len__(self):
         return len(self.x_pths)
@@ -15,7 +16,8 @@ class Dataset:
 
         y_pth = self.y_pths[idx]
         y = load_img(y_pth)[:, :, 1]
-        y = remove_artifacts(y)
+        if self.is_rm_artifacts:
+            y = remove_artifacts(y)
 
         return x, y
 

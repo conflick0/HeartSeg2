@@ -26,8 +26,13 @@ class HeartDataset(Dataset):
 
         image = normalise_zero_one(np.array(Image.open(x_pth)))
 
+        label = np.array(Image.open(y_pth))
+
+        if len(label.shape) == 3:
+            label = label[:, :, 1]
+
         label = normalise_zero_one(
-            remove_artifacts(np.array(Image.open(y_pth))[:, :, 1])
+            remove_artifacts(label)
         )
 
         im_x, im_y = image.shape
