@@ -83,7 +83,7 @@ def trainer_heart(args, model, snapshot_path):
     logging.info("{} iterations per epoch. {} max iterations ".format(len(trainloader), max_iterations))
     best_performance = 0.0
     iterator = tqdm(range(max_epoch))
-
+    min_loss = 1000
     for epoch_num in iterator:
         model.train()
         loss_ls = []
@@ -120,21 +120,25 @@ def trainer_heart(args, model, snapshot_path):
                 labs = label_batch[1, ...].unsqueeze(0) * 50
                 writer.add_image('train/GroundTruth', labs, iter_num)
 
-        # save_interval = 50  # int(max_epoch/6)
-        # if epoch_num > int(max_epoch / 2) and (epoch_num + 1) % save_interval == 0:
-        #     save_mode_path = os.path.join(snapshot_path, 'epoch_' + str(epoch_num) + '.pth')
-        #     torch.save(model.state_dict(), save_mode_path)
-        #     logging.info("save model to {}".format(save_mode_path))
-        save_mode_path = os.path.join(snapshot_path, 'epoch_' + str(epoch_num) + '.pth')
-        torch.save(model.state_dict(), save_mode_path)
-        logging.info("save model to {}".format(save_mode_path))
-        logging.info(f"avg loss: {np.array(loss_ls).mean()}")
+        avg_loss = np.array(loss_ls).mean()
+        logging.info(f"avg loss: {avg_loss}")
+
+        if avg_loss < min_loss:
+            save_mode_path = os.path.join(snapshot_path, 'best_model.pth')
+            torch.save(model.state_dict(), save_mode_path)
+            logging.info(f"[epoch_{epoch_num}] save model to {save_mode_path}")
+            min_loss = avg_loss
+
+        if epoch_num % 10 == 0:
+            save_mode_path = os.path.join(snapshot_path, 'epoch_' + str(epoch_num) + '.pth')
+            torch.save(model.state_dict(), save_mode_path)
+            logging.info(f"save model to {save_mode_path}")
 
         tt_avg_loss, tt_iter_num = test_step(testloader, model, dice_loss, ce_loss, tt_iter_num, writer, iterator)
         logging.info(f"tt avg loss: {tt_avg_loss}")
 
         if epoch_num >= max_epoch - 1:
-            save_mode_path = os.path.join(snapshot_path, 'epoch_' + str(epoch_num) + '.pth')
+            save_mode_path = os.path.join(snapshot_path, 'last_epoch_' + str(epoch_num) + '.pth')
             torch.save(model.state_dict(), save_mode_path)
             logging.info("save model to {}".format(save_mode_path))
             iterator.close()
