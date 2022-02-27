@@ -25,7 +25,12 @@ class TestDataset(Dataset):
         x = x.squeeze(0).numpy()
 
         y_pth = self.y_pths[idx]
-        y = load_img(y_pth)[:, :, 1]
+
+        y = load_img(y_pth)
+
+        if len(y.shape) == 3:
+            y = y[:, :, 1]
+
         y = self._remove_artifacts(y)
         y = Image.fromarray(np.uint8(y))
         y = self.transform(y)
