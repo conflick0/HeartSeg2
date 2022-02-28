@@ -72,10 +72,10 @@ if __name__ == '__main__':
     if is_build_chest_ct:
         build_chest_ct_data(
             src_dir=r'D:\home\school\ntut\dataset\chest-ct-segmentation\crop2_data',
-            dst_dir=r'D:\home\school\ntut\dataset\chest-ct-segmentation\adj_contract_data'
+            dst_dir=r'D:\home\school\ntut\dataset\chest-ct-segmentation\adj_contrast_data'
         )
     else:
         build_corcta_data(
             src_dir=r'D:\home\school\ntut\dataset\corcta\corcta_dcm_jpg',
-            dst_dir=r'D:\home\school\ntut\dataset\corcta\corcta_adj_contract_jpg'
+            dst_dir=r'D:\home\school\ntut\dataset\corcta\corcta_adj_contrast_jpg'
         )

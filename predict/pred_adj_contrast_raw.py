@@ -7,7 +7,7 @@ from predict.datasets.raw_dataset import RawDataset
 from predict.nets.net import Net
 from predict.utils.img_loader import rescale_img, threshold_img, show_pred_mask, write_pred_mask
 
-from preocess.build_adj_contract_data import adj_contrast_img
+from preocess.build_adj_contrast_data import adj_contrast_img
 
 def mk_predict_dir(dir):
     os.makedirs(os.path.join(dir), exist_ok=True)
@@ -78,9 +78,9 @@ def predict(target_id, model_name, data_name, transforms=None):
 
 
 if __name__ == '__main__':
-    model_pth = '../model/crop2/model_bst_ep100.pth'
-    model_name = 'crop2_model_bst_ep100'
+    model_pth = '../model/adj_contrast/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/model_bst_ep100.pth'
+    model_name = 'adj_contrast_model_bst_ep100'
     target_id = 'raw_dcm'
-    data_name = 'adj_contract_data'
+    data_name = 'adj_contrast_data'
     print(target_id)
     predict(target_id, model_name, data_name, transforms=[adj_contrast_img])

@@ -102,13 +102,13 @@ if __name__ == '__main__':
     # ID00423637202312137826377, ID00367637202296290303449, ID00426637202313170790466, ID00007637202177411956430
     # ID00032637202181710233084
     target_id = 'ID00423637202312137826377'
-    model_pth = '../model/crop2/model_bst_ep100.pth'
-    model_name = 'crop2_model_bst_ep100'
-    data_name = 'adj_contract_data'
+    model_pth = '../model/adj_contrast/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/model_bst_ep100.pth'
+    model_name = 'adj_contrast_model_bst_ep100'
+    data_name = 'adj_contrast_data'
 
     # predict single
-    print(target_id)
-    predict(model_name, model_pth, target_id, data_name)
+    # print(target_id)
+    # predict(model_name, model_pth, target_id, data_name)
 
     # predict all
-    # predict_all(model_name, model_pth, data_name)
+    predict_all(model_name, model_pth, data_name)
