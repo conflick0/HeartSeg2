@@ -13,7 +13,7 @@ def nrrd2jpg(file_path, out_dir):
     data, header = nrrd.read(file_path, index_order='C')
     data = np.flip(data, 0)
     for i, d in enumerate(data):
-        img = Image.fromarray(d * 255.).convert('RGB')
+        img = Image.fromarray(d * 255.).convert('L')
         img.save(path.join(out_dir, f'{i}.jpg'))
 
 
@@ -28,9 +28,14 @@ def draw_mask(inp_dir, msk_dir, out_dir):
         write_pred_mask(inp_img, msk_img, path.join(out_dir, f'{i}.bmp'))
 
 
-def rename_inp_file_name(inp_dir):
+def rename_inp_file_name(inp_dir, is_mask=False):
     '''重新命名醫院CT資料'''
-    for i, inp_fn in enumerate(os.listdir(inp_dir)):
+    if is_mask:
+        fns = sorted(os.listdir(inp_dir), key=lambda x: int(x.split('.')[0]))
+    else:
+        fns = os.listdir(inp_dir)
+
+    for i, inp_fn in enumerate(fns):
         os.rename(path.join(inp_dir, inp_fn), path.join(inp_dir, f'ID0_{i}.jpg'))
 
 
@@ -46,4 +51,4 @@ if __name__ == '__main__':
         out_dir='D:\dataset\corcta\cmp',
     )
 
-    # rename_inp_file_name(r'D:\dataset\corcta\tr_corcta\masks')
+    # rename_inp_file_name(r'D:\dataset\corcta\tr_corcta\ID0_images')
