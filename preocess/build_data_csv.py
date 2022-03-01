@@ -33,8 +33,8 @@ def get_df(root_img_dir, root_lab_dir, pids):
 
 
 if __name__ == '__main__':
-    data_name = 'adj_contract'
-    root_dir = fr'D:\home\school\ntut\dataset\chest-ct-segmentation\{data_name}_data'
+    data_name = 'adj_contrast_corcta'
+    root_dir = fr'D:\dataset\chest-ct-segmentation\{data_name}_data'
     root_img_dir = path.join(root_dir, 'images')
     root_lab_dir = path.join(root_dir, 'masks')
 
