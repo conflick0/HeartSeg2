@@ -28,17 +28,6 @@ def draw_mask(inp_dir, msk_dir, out_dir):
         write_pred_mask(inp_img, msk_img, path.join(out_dir, f'{i}.bmp'))
 
 
-def rename_inp_file_name(inp_dir, is_mask=False):
-    '''重新命名醫院CT資料'''
-    if is_mask:
-        fns = sorted(os.listdir(inp_dir), key=lambda x: int(x.split('.')[0]))
-    else:
-        fns = os.listdir(inp_dir)
-
-    for i, inp_fn in enumerate(fns):
-        os.rename(path.join(inp_dir, inp_fn), path.join(inp_dir, f'ID0_{i}.jpg'))
-
-
 if __name__ == '__main__':
     nrrd2jpg(
         file_path=r'D:\dataset\corcta\corcta_project\v2\export_data\Segmentation.nrrd',
@@ -51,4 +40,3 @@ if __name__ == '__main__':
         out_dir='D:\dataset\corcta\cmp',
     )
 
-    # rename_inp_file_name(r'D:\dataset\corcta\tr_corcta\ID0_images')

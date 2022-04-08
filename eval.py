@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
@@ -73,20 +74,54 @@ def eval_patients(pids, data_dir, model_pth):
         lab_dir = os.path.join(data_dir, 'masks', pid)
         dc, hd95 = eval_patient(img_dir, lab_dir, model_pth)
         mc_df.loc[len(mc_df)] = [pid, dc, hd95]
+
     return mc_df
 
 
+def eval_dataset(data_name, csv_pth, out_dir):
+    pids = get_pid_from_file(csv_pth)
+    data_dir = fr'D:\dataset\chest-ct-segmentation\{data_name}_data'
+    model_pth = f'model/{data_name}/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/model_bst_ep100.pth'
+
+    mc_df = eval_patients(pids, data_dir, model_pth)
+    mc_df.to_csv(os.path.join(out_dir, Path(csv_pth).parts[-1]), index=False)
+
+
+def eval_corcta_dataset(model_name, out_dir):
+    model_pth = f'model/{model_name}/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/model_bst_ep100.pth'
+
+    data_dir = 'D:\dataset\corcta\corcta_data'
+    img_dir_names = ['corcta', 'corcta_adj_contract']
+    lab_dir_name = 'mask'
+
+    for img_dir_name in img_dir_names:
+        img_dir = os.path.join(data_dir, img_dir_name)
+        lab_dir = os.path.join(data_dir, lab_dir_name)
+        dc, hd95 = eval_patient(img_dir, lab_dir, model_pth)
+
+        mc_df = pd.DataFrame(columns=['pid', 'dc', 'hd95'])
+        mc_df.loc[len(mc_df)] = [img_dir, dc, hd95]
+        mc_df.to_csv(os.path.join(out_dir, f'{img_dir_name}.csv'), index=False)
+
+
 if __name__ == '__main__':
+    data_names = ['crop2', 'adj_contrast', 'adj_contrast_corcta']
+    for data_name in data_names:
+        print(f'{data_name} evaluation start.')
+        base_csv_pth = f'data_csv/{data_name}'
 
-    for n in ['crop2']:
-        data_name = n
-        tt_csv_pth = f'data_csv/{data_name}/tt.csv'
-        pids = get_pid_from_file(tt_csv_pth)
-        data_dir = fr'D:\dataset\chest-ct-segmentation\{data_name}_data'
-        model_pth = f'model/{data_name}/TU_pretrain_R50-ViT-B_16_skip3_epo100_bs4_224/model_bst_ep100.pth'
+        # make output directory
         out_dir = f'data_csv/eval/{data_name}'
+        os.makedirs(out_dir, exist_ok=True)
 
-        mc_df = eval_patients(pids, data_dir, model_pth)
+        # eval train dataset
+        print(f'{data_name} train evaluation start.')
+        eval_dataset(data_name, os.path.join(base_csv_pth, 'tr.csv'), out_dir)
 
-    os.makedirs(out_dir, exist_ok=True)
-    mc_df.to_csv(os.path.join(out_dir, 'tt.csv'), index=False)
+        # eval test dataset
+        print(f'{data_name} test evaluation start.')
+        eval_dataset(data_name, os.path.join(base_csv_pth, 'tt.csv'), out_dir)
+
+        # eval corcta dataset
+        print(f'{data_name} corcta evaluation start.')
+        eval_corcta_dataset(data_name, out_dir)
