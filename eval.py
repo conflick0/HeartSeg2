@@ -100,7 +100,7 @@ def eval_corcta_dataset(model_name, out_dir):
         dc, hd95 = eval_patient(img_dir, lab_dir, model_pth)
 
         mc_df = pd.DataFrame(columns=['pid', 'dc', 'hd95'])
-        mc_df.loc[len(mc_df)] = [img_dir, dc, hd95]
+        mc_df.loc[len(mc_df)] = [img_dir_name, dc, hd95]
         mc_df.to_csv(os.path.join(out_dir, f'{img_dir_name}.csv'), index=False)
 
 
