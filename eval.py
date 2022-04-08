@@ -78,7 +78,7 @@ def eval_patients(pids, data_dir, model_pth):
 
 if __name__ == '__main__':
 
-    for n in ['adj_contrast_corcta', 'adj_contrast']:
+    for n in ['crop2']:
         data_name = n
         tt_csv_pth = f'data_csv/{data_name}/tt.csv'
         pids = get_pid_from_file(tt_csv_pth)
