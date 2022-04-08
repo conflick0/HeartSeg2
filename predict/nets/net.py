@@ -4,8 +4,8 @@ import numpy as np
 
 class Net:
     def __init__(self, model_pth):
-        self._net = torch.load(model_pth)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self._net = torch.load(model_pth, map_location=self.device)
 
     def predict(self, x):
         self._net.to(self.device)
