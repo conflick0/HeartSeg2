@@ -17,11 +17,12 @@ def cp_files(inp_dir, dst_dir,  is_mask=False):
 if __name__ == '__main__':
     inp_base_dir = 'D:\dataset\corcta'
     out_base_dir = path.join(inp_base_dir, 'corcta_data')
-    inp_dirs = ['corcta_dcm_jpg', 'corcta_adj_contract_jpg', 'mask_jpg']
-    out_dirs = ['corcta', 'corcta_adj_contract', 'mask']
+    inp_dir_ns = ['corcta_dcm_jpg', 'corcta_adj_contract_jpg', 'mask_jpg']
+    out_dir_ns = ['corcta', 'corcta_adj_contract', 'mask']
     os.makedirs(out_base_dir, exist_ok=True)
-    for inp_dir, out_dir in zip(inp_dirs, out_dirs):
-        inp_dir = path.join(inp_base_dir, inp_dir)
-        out_dir = path.join(out_base_dir, out_dir)
+    for inp_dir_n, out_dir_n in zip(inp_dir_ns, out_dir_ns):
+        inp_dir = path.join(inp_base_dir, inp_dir_n)
+        out_dir = path.join(out_base_dir, out_dir_n)
         os.makedirs(out_dir, exist_ok=True)
-        cp_files(inp_dir, out_dir)
+        is_mask = inp_dir_n == 'mask_jpg'
+        cp_files(inp_dir, out_dir, is_mask)
